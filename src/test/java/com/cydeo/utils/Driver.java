@@ -4,6 +4,7 @@ import io.appium.java_client.AppiumDriver;
 import io.appium.java_client.MobileElement;
 import io.appium.java_client.android.AndroidDriver;
 import io.appium.java_client.remote.MobileCapabilityType;
+import org.openqa.selenium.MutableCapabilities;
 import org.openqa.selenium.Platform;
 import org.openqa.selenium.remote.DesiredCapabilities;
 
@@ -36,6 +37,21 @@ public class Driver {
                     }
                     driver = new AndroidDriver<>(url, desiredCapabilities);
                     break;
+
+                case "android-saucelab":
+                    MutableCapabilities mucap = new MutableCapabilities();
+                    mucap.setCapability(MobileCapabilityType.AUTOMATION_NAME, "UiAutomator2");
+                    mucap.setCapability(MobileCapabilityType.PLATFORM_NAME, Platform.ANDROID);
+                    mucap.setCapability(MobileCapabilityType.DEVICE_NAME, "Samsung.*");
+                    mucap.setCapability(MobileCapabilityType.APP, "https://cybertek-appium.s3.amazonaws.com/calculator.apk");
+                    try {
+                        url = new URL("https://oauth-erdogankalyoncutr-8829f:ba02f475-01db-4231-892f-5ac0d13c111c@ondemand.eu-central-1.saucelabs.com:443/wd/hub");
+                    } catch (MalformedURLException e) {
+                        e.printStackTrace();
+                    }
+                    driver = new AndroidDriver<>(url, mucap);
+                    break;
+
                 case "android-remote":
                     DesiredCapabilities caps = new DesiredCapabilities();
 
